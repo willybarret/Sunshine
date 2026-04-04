@@ -1,0 +1,28 @@
+{
+  "name": "Sunshine (Ubuntu 22.04 dev, no CUDA)",
+  "build": {
+    "context": "../..",
+    "dockerfile": "Containerfile",
+    "args": {
+      "security-opt": "label=disable"
+    }
+  },
+  // "remoteUser": "vscode",
+  "updateRemoteUserUID": false,
+  "workspaceFolder": "/workspaces/Sunshine",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/Sunshine,type=bind",
+  "runArgs": ["--security-opt=label=disable", "--userns=keep-id"],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "cmake.useCMakePresets": "never",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "ms-vscode.cmake-tools",
+        "llvm-vs-code-extensions.vscode-clangd"
+      ]
+    }
+  }
+}
+

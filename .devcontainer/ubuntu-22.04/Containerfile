@@ -1,0 +1,21 @@
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+
+WORKDIR /tmp/sunshine
+COPY --link scripts/linux_build.sh ./scripts/linux_build.sh
+
+RUN <<_DEPS
+#!/bin/bash
+set -e
+chmod +x ./scripts/linux_build.sh
+TMPDIR=/var/tmp ./scripts/linux_build.sh \
+  --step=deps \
+  --ubuntu-test-repo \
+  --sudo-off \
+  --skip-cuda
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+rm -rf /tmp/sunshine
+_DEPS
+
+WORKDIR /workspaces/Sunshine
